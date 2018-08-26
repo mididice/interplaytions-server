@@ -1,0 +1,5 @@
+*.midi
+*.mid
+*.pyc
+db.sqlite3
+/__pycache__/
