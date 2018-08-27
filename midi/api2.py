@@ -14,7 +14,7 @@ def generate_midi(request):
 	if request.method == 'POST':
 		print(request.body)
 	cm = Samdasu()
-	result = cm.create_midi(request.body)
+	result = cm.create_midi(request.body) # create_midi2(여운승교수님 테스트용)
 	response = HttpResponse(result, content_type="audio/midi")
 	# return Response(result, headers=headers)
 	return response
