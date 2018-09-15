@@ -1,6 +1,7 @@
-from rest_framework.decorators import api_view
-from rest_framework.decorators import parser_classes
+from rest_framework.decorators import api_view, authentication_classes, parser_classes, permission_classes
 from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from midi.midi_creation import Samdasu
 from midi.parser import MidiParser
 import json
@@ -14,7 +15,7 @@ def generate_midi(request):
 	if request.method == 'POST':
 		print(request.body)
 	cm = Samdasu()
-	result = cm.create_midi(request.body) # create_midi2(여운승교수님 테스트용)
+	result = cm.create_midi_test(request.body) # create_midi2(여운승교수님 테스트용)
 	response = HttpResponse(result, content_type="audio/midi")
 	# return Response(result, headers=headers)
 	return response
@@ -34,3 +35,14 @@ def request_midi(request):
 		return Response({"message":"midi request completed"})
 	else:
 		return Response({"message":"midi request failed"})
+
+
+@api_view(['GET'])
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
+def request_auth(request, format=None):
+	content = {
+		'user' : unicode(request.user),
+		'auth' : unicode(request.auth),
+	}
+	return Response(content)

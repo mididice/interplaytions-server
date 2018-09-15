@@ -1,5 +1,6 @@
 *.midi
 *.mid
 *.pyc
+*.cfg
 db.sqlite3
 /__pycache__/

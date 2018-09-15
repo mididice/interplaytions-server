@@ -28,7 +28,7 @@ joblib==0.12.2
 kiwisolver==1.0.1
 librosa==0.6.2
 llvmlite==0.24.0
-magenta==0.3.11
+magenta==0.3.12
 Markdown==2.6.11
 MarkupSafe==1.0
 matplotlib==2.2.3
