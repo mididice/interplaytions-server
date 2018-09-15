@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from midi.midi_creation import Samdasu
+from midi.util import midi_file_to_raw
 from midi.parser import MidiParser
 import json
 import requests
@@ -29,7 +30,7 @@ def request_midi(request):
 	url = 'http://localhost:8000/api/v2/'
 	headers = {"content-type":"audio/midi"}
 	cm = Samdasu()
-	midi_str = cm.midi_file_to_sequence_proto('./midifile/test.mid')
+	midi_str = midi_file_to_raw('./midifile/test.mid')
 	r = requests.post(url,data=midi_str, headers=headers)
 	if r.status_code < 300:
 		return Response({"message":"midi request completed"})
@@ -46,3 +47,10 @@ def request_auth(request, format=None):
 		'auth' : unicode(request.auth),
 	}
 	return Response(content)
+
+@api_view(['GET'])
+def request_test(request):
+	from django.conf import settings
+	base_dir = settings.BASE_DIR
+	print(base_dir)
+	return Response({"message":base_dir})

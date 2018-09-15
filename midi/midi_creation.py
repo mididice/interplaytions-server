@@ -11,10 +11,6 @@ import tempfile
 
 
 class Samdasu():
-    def midi_file_to_sequence_proto(self, midi_file):
-        with tf.gfile.Open(midi_file, 'rb') as f:
-            midi_as_string = f.read()
-        return midi_as_string
 
     def create_midi(self):
 

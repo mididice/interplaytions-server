@@ -5,6 +5,7 @@ from rest_framework_swagger.views import get_swagger_view
 
 import midi.api
 import midi.api2
+import midi.combine
 
 app_name='midi'
 
@@ -16,5 +17,7 @@ urlpatterns = [
     # url(r'^api/doc', get_swagger_view(title='Rest API Document')),
     url(r'^api/v1/', include((router.urls, 'midi'), namespace='api')),
     url(r'^api/v2/', midi.api2.generate_midi),
-    url(r'^api/test/', midi.api2.request_midi),
+    url(r'^api/v3/', midi.api2.request_auth),
+    url(r'^api/combine/', midi.combine.combine_all),
+    url(r'^api/test/', midi.api2.request_test),
 ]
