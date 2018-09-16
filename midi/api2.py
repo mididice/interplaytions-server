@@ -7,7 +7,9 @@ from midi.util import midi_file_to_raw
 from midi.parser import MidiParser
 import json
 import requests
+import os.path
 from django.http import HttpResponse
+from django.conf import settings
 
 
 @api_view(['GET', 'POST'])
@@ -16,26 +18,29 @@ def generate_midi(request):
 	if request.method == 'POST':
 		print(request.body)
 	cm = Samdasu()
-	result = cm.create_midi_test(request.body) # create_midi2(여운승교수님 테스트용)
+	result = cm.create_midi(request.body)
 	response = HttpResponse(result, content_type="audio/midi")
-	# return Response(result, headers=headers)
+	response['Content-Disposition'] = 'attachment; filename=generated.mid'
+	# response['Content-Length'] = os.path.getsize(result)
 	return response
 
 
-""" 
-this api is for test api "/api/v2/"
-"""
-@api_view(['GET'])
-def request_midi(request):
-	url = 'http://localhost:8000/api/v2/'
-	headers = {"content-type":"audio/midi"}
+@api_view(['POST'])
+@parser_classes((MidiParser,))
+def generate_midi_one(request, pk):
+	base_dir = settings.BASE_DIR
+	basic_dir = os.path.join(base_dir, 'midibasic')
+	file_name = str(pk)+'.mid'
+	file_path = os.path.join(basic_dir, file_name)
+	print(file_path)
+	raw_midi = midi_file_to_raw(file_path)
 	cm = Samdasu()
-	midi_str = midi_file_to_raw('./midifile/test.mid')
-	r = requests.post(url,data=midi_str, headers=headers)
-	if r.status_code < 300:
-		return Response({"message":"midi request completed"})
-	else:
-		return Response({"message":"midi request failed"})
+	result = cm.create_midi(raw_midi)
+	print(result)
+	response = HttpResponse(result, content_type="audio/midi")
+	response['Content-Disposition'] = 'attachment; filename=generated.mid'
+	# response['Content-Length'] = os.path.getsize(result)
+	return response
 
 
 @api_view(['GET'])
@@ -50,7 +55,6 @@ def request_auth(request, format=None):
 
 @api_view(['GET'])
 def request_test(request):
-	from django.conf import settings
 	base_dir = settings.BASE_DIR
 	print(base_dir)
 	return Response({"message":base_dir})

@@ -12,7 +12,7 @@ import tempfile
 
 class Samdasu():
 
-    def create_midi(self):
+    def create_midi_default(self):
 
         BUNDLE_NAME = 'attention_rnn'
 
@@ -71,6 +71,9 @@ class Samdasu():
                         "1", "midi folder")
 
 
+    """
+    # create_midi_test(여운승교수님 테스트용)
+    """
     def create_midi_test(self, midi_data):
 
         BUNDLE_NAME = 'attention_rnn'
