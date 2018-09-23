@@ -11,8 +11,11 @@ import tempfile
 
 
 class Samdasu():
-
-    def create_midi_default(self):
+    """
+    primer_midi : raw midi
+    output_midi : dir path + midi file
+    """
+    def create_midi_default(self, primer_midi, output_midi):
 
         BUNDLE_NAME = 'attention_rnn'
 
@@ -32,7 +35,7 @@ class Samdasu():
         seconds_per_step = 60.0 / qpm / generator.steps_per_quarter
         total_seconds = 3
 
-        primer_sequence = magenta.music.midi_file_to_sequence_proto("./midifile/test.mid")
+        primer_sequence = magenta.music.midi_file_to_sequence_proto(primer_midi)
         if primer_sequence.tempos and primer_sequence.tempos[0].qpm:
             qpm = primer_sequence.tempos[0].qpm
         if primer_sequence:
@@ -59,13 +62,8 @@ class Samdasu():
 
         # Make the generate request num_outputs times and save the output as midi
         # files.
-        date_and_time = time.strftime('%Y-%m-%d_%H%M%S')
-        digits = 1
-
         generated_sequence = generator.generate(input_sequence, generator_options)
-        midi_filename = '%s_%s.mid' % (date_and_time, str(1).zfill(digits))
-        midi_path = os.path.join("./midifile", midi_filename)
-        magenta.music.sequence_proto_to_midi_file(generated_sequence, midi_path)
+        magenta.music.sequence_proto_to_midi_file(generated_sequence, output_midi)
 
         tf.logging.info('Wrote %d MIDI files to %s',
                         "1", "midi folder")

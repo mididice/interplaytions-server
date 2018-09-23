@@ -16,8 +16,8 @@ class MergeTest(unittest.TestCase):
 
 	def test_merge_midi(self):
 		egp_chord = pretty_midi.PrettyMIDI()
-
-		egp_program = pretty_midi.instrument_name_to_program('Electric Grand Piano')
+		# egp_program = pretty_midi.instrument_name_to_program('Lead 2 (sawtooth)')
+		egp_program = pretty_midi.instrument_name_to_program('Synth Bass 1')
 		egp = pretty_midi.Instrument(program=egp_program)
 
 		midi_data = pretty_midi.PrettyMIDI('180827_01_midi.mid')
@@ -40,7 +40,7 @@ class MergeTest(unittest.TestCase):
 					egp.notes.append(note)
 
 		egp_chord.instruments.append(egp)
-		egp_chord.write('egp.mid')
+		egp_chord.write('SynthBass1.mid')
 
 if __name__ == '__main__':
 	unittest.main()

@@ -1,17 +1,24 @@
 from rest_framework.decorators import api_view, authentication_classes, parser_classes, permission_classes
 from rest_framework.response import Response
 from django.http import HttpResponse
-from midi.integration import Integration
-from midi.util import midi_file_to_raw
+from midi.integration import integrate_midi
+from midi.util import midi_file_to_raw, delete_midi_file
+from django.conf import settings
+import os.path
 
 @api_view(['POST'])
 def combine_all(request):
-	ig = Integration()
-	result = ig.united_midi('test_dir_name')
+	base_dir = settings.BASE_DIR
+	generated_path = os.path.join(base_dir, 'midifile')
+	result_path = os.path.join(base_dir, 'midiresult')
+	result = integrate_midi()
 	raw_data = midi_file_to_raw(result)
+	if raw_data:
+		delete_midi_file(generated_path)
+		delete_midi_file(result_path)
 	if result:
 		response = HttpResponse(raw_data, content_type="audio/midi")
 		return response
 	else:
-		return Response({"message":"error"})
+		return HttpResponse(status=500)
 	

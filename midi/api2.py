@@ -26,20 +26,20 @@ def generate_midi(request):
 
 
 @api_view(['POST'])
-@parser_classes((MidiParser,))
-def generate_midi_one(request, pk):
+def generate_midi_one(request, seq, file_number):
 	base_dir = settings.BASE_DIR
 	basic_dir = os.path.join(base_dir, 'midibasic')
-	file_name = str(pk)+'.mid'
-	file_path = os.path.join(basic_dir, file_name)
-	print(file_path)
-	raw_midi = midi_file_to_raw(file_path)
+	generated_dir = os.path.join(base_dir, 'midifile')
+	file_name = str(file_number)+'.mid'
+	generate_file_name = str(seq)+'.mid'
+	basic_file_path = os.path.join(basic_dir, file_name)
+	generated_file_path = os.path.join(generated_dir, generate_file_name)
+	# raw_midi = midi_file_to_raw(basic_file_path)
 	cm = Samdasu()
-	result = cm.create_midi(raw_midi)
-	print(result)
+	cm.create_midi_default(basic_file_path, generated_file_path)
+	result = midi_file_to_raw(generated_file_path)
 	response = HttpResponse(result, content_type="audio/midi")
-	response['Content-Disposition'] = 'attachment; filename=generated.mid'
-	# response['Content-Length'] = os.path.getsize(result)
+	response['Content-Disposition'] = 'attachment; filename=generated.mid'	
 	return response
 
 
@@ -53,8 +53,7 @@ def request_auth(request, format=None):
 	}
 	return Response(content)
 
+
 @api_view(['GET'])
-def request_test(request):
-	base_dir = settings.BASE_DIR
-	print(base_dir)
-	return Response({"message":base_dir})
+def request_test(request, seq, file_number):
+	return Response({"file_number":file_number, "seq":seq})

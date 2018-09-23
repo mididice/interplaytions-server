@@ -14,6 +14,14 @@ class ApiCoreTest(unittest.TestCase):
 			self.assertTrue(r.raw)
 		else:
 			self.assertTrue(False)
+			
+	def test_api_1(self):
+		url = 'http://localhost:8000/api/midi/1/2/'
+		r = requests.post(url)
+		if r.status_code == 200:
+			self.assertTrue(r.text)
+		else:
+			self.assertTrue(False)
 
 
 if __name__ == '__main__':

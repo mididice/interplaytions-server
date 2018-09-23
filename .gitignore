@@ -1,5 +1,6 @@
 *.midi
 *.mid
+*.wav
 *.pyc
 *.cfg
 db.sqlite3
