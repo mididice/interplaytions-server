@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from midi.midi_creation import Samdasu
-from midi.util import midi_file_to_raw
+from midi.util import midi_file_to_raw, copy_basic_midi
 from midi.parser import MidiParser
 import json
 import requests
@@ -31,13 +31,16 @@ def generate_midi_one(request, seq, file_number):
 	basic_dir = os.path.join(base_dir, 'midibasic')
 	generated_dir = os.path.join(base_dir, 'midifile')
 	file_name = str(file_number)+'.mid'
-	generate_file_name = str(seq)+'.mid'
+	generate_file_name = str(seq)+'a.mid'
+	prev_file_name = str(seq)+'.mid'
 	basic_file_path = os.path.join(basic_dir, file_name)
 	generated_file_path = os.path.join(generated_dir, generate_file_name)
+	prev_file_path = os.path.join(generated_dir, prev_file_name)
 	# raw_midi = midi_file_to_raw(basic_file_path)
 	cm = Samdasu()
 	cm.create_midi_default(basic_file_path, generated_file_path)
 	result = midi_file_to_raw(generated_file_path)
+	copy_basic_midi(basic_file_path, prev_file_path)
 	response = HttpResponse(result, content_type="audio/midi")
 	response['Content-Disposition'] = 'attachment; filename=generated.mid'	
 	return response

@@ -1,5 +1,6 @@
 import tensorflow as tf
 import shutil
+from shutil import copyfile
 import os
 from os import listdir
 from os.path import isfile, join
@@ -20,3 +21,6 @@ def delete_midi_file(path):
 	midifiles = [file_name for file_name in listdir(path) if isfile(join(path, file_name))]
 	for f in midifiles:
 		os.remove(join(path, f))
+
+def copy_basic_midi(basic_path, result_path):
+	copyfile(basic_path, result_path)

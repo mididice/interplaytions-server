@@ -21,6 +21,22 @@ class ApiKeyTest(unittest.TestCase):
 		else:
 			self.assertTrue(False)
 
+	def test_api_3(self):
+		url = 'http://localhost:8000/api/midi/3/3/'
+		r = requests.post(url)
+		if r.status_code == 200:
+			self.assertTrue(r.text)
+		else:
+			self.assertTrue(False)
+
+	def test_api_4(self):
+		url = 'http://localhost:8000/api/midi/4/4/'
+		r = requests.post(url)
+		if r.status_code == 200:
+			self.assertTrue(r.text)
+		else:
+			self.assertTrue(False)
+
 	def test_api_combine(self):
 		url = 'http://localhost:8000/api/midi/combine/'
 		r = requests.post(url, stream=True)

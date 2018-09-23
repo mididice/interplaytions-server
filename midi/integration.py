@@ -23,12 +23,12 @@ def integrate_midi():
 	for name in sorted(midifiles):
 		if name.endswith('.mid'):
 			midi_data = pretty_midi.PrettyMIDI(os.path.join(path, name))
-		for instrument in midi_data.instruments:
-			if not instrument.is_drum:
-				for note in instrument.notes:
-					note = pretty_midi.Note(velocity=note.velocity, pitch=note.pitch, start=note.start+adding, end=note.end+adding)
-					midi_notes.append(note)
-			adding = midi_data.get_end_time()
+			for instrument in midi_data.instruments:
+				if not instrument.is_drum:
+					for note in instrument.notes:
+						note = pretty_midi.Note(velocity=note.velocity, pitch=note.pitch, start=note.start+adding, end=note.end+adding)
+						midi_notes.append(note)
+			adding += midi_data.get_end_time()
 
 	egp.notes.extend(midi_notes)
 	egp_chord.instruments.append(egp)
