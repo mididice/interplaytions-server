@@ -3,3 +3,12 @@ This project is creating music using deeplearning. This algorithms for generatin
 A.I's music is composed by organically connecting with the previous node by learning the data of the selected / created node as input.
 
 Mididice was started by designers and developers from the [YAPP](http://www.yapp.co.kr)
+
+```
+mkdir midifile
+mkdir midiresult
+python3 -m venv env(python3 -m virtualenv env)
+source env/bin/activate
+pip install -r requirements.txt
+python manage.py runserver
+```
