@@ -1,7 +1,6 @@
-*.midi
-*.mid
 *.wav
 *.pyc
 *.cfg
 db.sqlite3
 /__pycache__/
+/test/*.mid
