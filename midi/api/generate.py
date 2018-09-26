@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.conf import settings
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @parser_classes((MidiParser,))
 def generate_midi(request):
 	if request.method == 'POST':
@@ -44,17 +44,6 @@ def generate_midi_one(request, seq, file_number):
 	response = HttpResponse(result, content_type="audio/midi")
 	response['Content-Disposition'] = 'attachment; filename=generated.mid'	
 	return response
-
-
-@api_view(['GET'])
-@authentication_classes((SessionAuthentication, BasicAuthentication))
-@permission_classes((IsAuthenticated,))
-def request_auth(request, format=None):
-	content = {
-		'user' : unicode(request.user),
-		'auth' : unicode(request.auth),
-	}
-	return Response(content)
 
 
 @api_view(['GET'])
