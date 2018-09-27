@@ -5,12 +5,15 @@ from midi.integration import integrate_midi
 from midi.util import midi_file_to_raw, delete_midi_file
 from django.conf import settings
 import os.path
+import tensorflow as tf
 
 @api_view(['POST'])
 def combine_all(request):
 	base_dir = settings.BASE_DIR
 	generated_path = os.path.join(base_dir, 'midifile')
 	result_path = os.path.join(base_dir, 'midiresult')
+	if not tf.gfile.Exists(result_path):
+		tf.gfile.MakeDirs(result_path)
 	result = integrate_midi()
 	raw_data = midi_file_to_raw(result)
 	if raw_data:

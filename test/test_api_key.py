@@ -6,7 +6,7 @@ import io
 
 class ApiKeyTest(unittest.TestCase):
 	def test_api_1(self):
-		url = 'http://localhost:8000/api/midi/1/2/'
+		url = 'http://localhost:8000/api/midi/1/1/'
 		r = requests.post(url)
 		if r.status_code == 200:
 			self.assertTrue(r.text)
@@ -14,7 +14,7 @@ class ApiKeyTest(unittest.TestCase):
 			self.assertTrue(False)
 
 	def test_api_2(self):
-		url = 'http://localhost:8000/api/midi/2/1/'
+		url = 'http://localhost:8000/api/midi/2/2/'
 		r = requests.post(url)
 		if r.status_code == 200:
 			self.assertTrue(r.text)
