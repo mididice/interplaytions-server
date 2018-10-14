@@ -1,5 +1,6 @@
 import pretty_midi
 import os
+import uuid
 from os import listdir
 from os.path import isfile, join
 from django.conf import settings
@@ -55,7 +56,8 @@ def integrate_midi():
 	egp.notes.extend(midi_notes)
 	egp_chord.instruments.append(egp)
 	egp_chord.instruments.append(beat_maker(adding))
-	result_file = 'generated.mid'
+
+	result_file = str(uuid.uuid4().hex)+".mid"
 	egp_chord.write(os.path.join(result_path, result_file))
 	return os.path.join(result_path, result_file)
 
