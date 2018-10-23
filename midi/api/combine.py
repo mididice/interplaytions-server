@@ -38,7 +38,7 @@ def combine_all_path(request):
 		delete_midi_file(generated_path)
 		# delete_midi_file(result_path)
 	if result:
-		return Response({"result":result})
+		return Response(result)
 	else:
 		return HttpResponse(status=500)
 	

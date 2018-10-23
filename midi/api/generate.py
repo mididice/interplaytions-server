@@ -66,7 +66,7 @@ def generate_midi_one_path(request, seq, file_number):
 	cm.create_midi_default(basic_file_path, generated_file_path)
 	converted_file_path = convert_midi(seq, generated_file_path)
 	
-	return Response({"result":converted_file_path})
+	return Response(converted_file_path)
 
 
 @api_view(['GET'])
