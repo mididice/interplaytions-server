@@ -17,14 +17,13 @@ class ApiAnalyzeTest(unittest.TestCase):
 	def test_analyze(self):
 		result = []
 		
-		midi_data = pretty_midi.PrettyMIDI('180827_01_midi.mid')
+		midi_data = pretty_midi.PrettyMIDI('analog-midi.mid')
 		for instrument in midi_data.instruments:
 			for note in instrument.notes:
 				notes = {}
 				notes['start'] = note.start
 				notes['end'] = note.end
 				notes['pitch'] = note.pitch
-				notes['velocity'] = note.velocity
 				result.append(notes)
 
 		print(result)
