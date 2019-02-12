@@ -1,7 +1,12 @@
 *.wav
 *.pyc
 *.cfg
+*.xml
 db.sqlite3
+.idea
+/env/
 /__pycache__/
 /test/*.mid
+/midifile/*.mid
+/miditemp/*.mid
 /midiresult/*.mid

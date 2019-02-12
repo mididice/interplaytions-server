@@ -1,7 +1,12 @@
 type mididice.txt
-@ECHO ..
+@ECHO .
 @ECHO :: mididice-python for interplaytion(2018) ::: (team mididice)
-call ..\dice\Scripts\activate
-@ECHO started virtualenv and server
-cd ..\
+cd ..
+call env\Scripts\activate
+pip install update pip
+pip install --upgrade setuptools
+pip install -r requirements.txt
 python manage.py runserver
+
+@ECHO "server on"
+pause

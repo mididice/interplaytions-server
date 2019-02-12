@@ -12,6 +12,8 @@ import os.path
 from django.http import HttpResponse
 from django.conf import settings
 import tensorflow as tf
+import uuid
+import pretty_midi
 
 
 @api_view(['POST'])
@@ -67,6 +69,42 @@ def generate_midi_one_path(request, seq, file_number):
 	converted_file_path = convert_midi(seq, generated_file_path)
 	
 	return Response(converted_file_path)
+
+
+@api_view(['POST'])
+def generate_midi_json(request):
+	base_dir = settings.BASE_DIR
+	generated_dir = os.path.join(base_dir, 'midifile')
+	if not tf.gfile.Exists(generated_dir):
+		tf.gfile.MakeDirs(generated_dir)
+	temp_dir = os.path.join(base_dir, 'miditemp')
+	if not tf.gfile.Exists(temp_dir):
+		tf.gfile.MakeDirs(temp_dir)
+	
+	generate_file_name = '{}.mid'.format(str(uuid.uuid4())[:13])
+	print(generate_file_name)
+	unicode_data = request.body.decode('utf-8')
+	
+	json_data = json.loads(unicode_data)
+
+	temp_file_path = os.path.join(temp_dir, generate_file_name)	
+
+	cello_c_chord = pretty_midi.PrettyMIDI()
+	cello_program = pretty_midi.instrument_name_to_program('Cello')
+	cello = pretty_midi.Instrument(program=cello_program)
+		
+	for midi in json_data:
+		note = pretty_midi.Note(velocity=midi.get('velocity'), pitch=midi.get('note'), start=midi.get('starttime'), end=midi.get('endtime'))
+		cello.notes.append(note)
+	cello_c_chord.instruments.append(cello)
+	cello_c_chord.write(temp_file_path)
+
+	generated_file_path = os.path.join(generated_dir, generate_file_name)
+	
+	cm = Samdasu()
+	cm.create_midi_default(temp_file_path, generated_file_path)
+	
+	return Response(generated_file_path)
 
 
 @api_view(['GET'])

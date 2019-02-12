@@ -7,6 +7,7 @@ from django.conf import settings
 import os.path
 import tensorflow as tf
 
+
 @api_view(['POST'])
 def combine_all(request):
 	base_dir = settings.BASE_DIR
