@@ -81,28 +81,27 @@ def generate_midi_json(request):
 	if not tf.gfile.Exists(temp_dir):
 		tf.gfile.MakeDirs(temp_dir)
 	
-	generate_file_name = '{}.mid'.format(str(uuid.uuid4())[:13])
-	print(generate_file_name)
+	generate_file_name = '{}.mid'.format(str(uuid.uuid4())[:13])	
 	unicode_data = request.body.decode('utf-8')
-	
 	json_data = json.loads(unicode_data)
-
 	temp_file_path = os.path.join(temp_dir, generate_file_name)	
-
 	cello_c_chord = pretty_midi.PrettyMIDI()
 	cello_program = pretty_midi.instrument_name_to_program('Cello')
 	cello = pretty_midi.Instrument(program=cello_program)
-		
+	total_second = 0
+
 	for midi in json_data:
 		note = pretty_midi.Note(velocity=midi.get('velocity'), pitch=midi.get('note'), start=midi.get('starttime'), end=midi.get('endtime'))
+		total_second = midi.get('endtime')
 		cello.notes.append(note)
+
 	cello_c_chord.instruments.append(cello)
 	cello_c_chord.write(temp_file_path)
 
 	generated_file_path = os.path.join(generated_dir, generate_file_name)
 	
 	cm = Samdasu()
-	cm.create_midi_default(temp_file_path, generated_file_path)
+	cm.create_midi_with_second(temp_file_path, generated_file_path, total_second+0.3)
 	
 	return Response(generated_file_path)
 
