@@ -101,7 +101,7 @@ def generate_midi_json(request):
 	generated_file_path = os.path.join(generated_dir, generate_file_name)
 	
 	cm = Samdasu()
-	cm.create_midi_with_second(temp_file_path, generated_file_path, total_second+0.3)
+	cm.create_midi_with_second(temp_file_path, generated_file_path, total_second+0.5)
 	
 	return Response(generated_file_path)
 

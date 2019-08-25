@@ -3,7 +3,9 @@ type mididice.txt
 @ECHO :: mididice-python for interplaytion(2018) ::: (team mididice)
 cd ..
 call env\Scripts\activate
-python manage.py runserver
+pip install update pip
+pip install --upgrade setuptools
+pip install -r requirements.txt
 
-@ECHO "server on"
+@ECHO "complete install"
 pause
