@@ -4,6 +4,16 @@ services:
   web:
     image: "server"
     volumes:
-      - .:/code
+      - static_volume:/code
     ports:
       - "8000:8000"
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/code
+    ports:
+      - "2017:80"
+    depends_on:
+      - web
+volumes:
+  static_volume:
