@@ -2,7 +2,12 @@
 This project is creating music using deeplearning. This algorithms for generating midi is used [Magenta](https://github.com/tensorflow/magenta).
 A.I's music is composed by organically connecting with the previous node by learning the data of the selected / created node as input.
 
-### docker
+### 도커 생성
+```
+docker build -t "server" .
+```
+
+### 실행하기
 ```
 docker-compose up -d
 ```
