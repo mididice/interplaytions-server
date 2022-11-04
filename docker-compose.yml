@@ -2,17 +2,20 @@ version: "3.9"
    
 services:
   web:
-    image: "server"
+    image: "samdasu/interplaytions-server:v0.0.10"
     volumes:
-      - static_volume:/code
-    ports:
-      - "8000:8000"
+      - static_volume:/code/midiresult
+    ports: 
+    - "8000:8000"
+    environment:
+      DEBUG: "False"
+      SECRET_KEY: ""
   nginx:
-    build: ./nginx
+    image: "samdasu/interplaytions-server-nginx"
     volumes:
       - static_volume:/code
     ports:
-      - "2017:80"
+      - "80:80"
     depends_on:
       - web
 volumes:

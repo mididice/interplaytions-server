@@ -2,6 +2,7 @@ Django>=2.1.5
 django-cors-headers==2.4.0
 django-rest-swagger==2.2.0
 djangorestframework>=3.9.1
+environs==7.3.1
 llvmlite==0.24.0
 magenta==0.3.12
 numba==0.39.0

@@ -6,10 +6,10 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc libsndfile1-dev libffi-dev
 
 WORKDIR /code
+RUN rm -rf /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
-COPY . /code/
 
-EXPOSE 8000
+COPY . .
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
