@@ -9,5 +9,5 @@ numba==0.39.0
 resampy==0.2.1
 pretty-midi==0.2.8
 tensorboard==1.10.0
-tensorflow==1.10.0
+tensorflow==2.7.2
 protobuf==3.6.1
