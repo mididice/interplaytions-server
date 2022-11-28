@@ -13,7 +13,7 @@ services:
   nginx:
     image: "samdasu/interplaytions-server-nginx"
     volumes:
-      - static_volume:/code
+      - static_volume:/code/midiresult
     ports:
       - "80:80"
     depends_on:
