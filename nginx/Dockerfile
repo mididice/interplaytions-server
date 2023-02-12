@@ -1,4 +1,8 @@
 FROM nginx:1.21-alpine
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d
+RUN rm -rf /etc/nginx/conf.d
+
+COPY conf.d /etc/nginx/conf.d
+COPY run.sh /etc/nginx
+
+CMD ["sh", "/etc/nginx/run.sh"]
