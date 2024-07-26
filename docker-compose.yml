@@ -5,6 +5,7 @@ services:
       - static_volume:/code/midiresult
     ports: 
     - "8000:8000"
+    restart: always
     environment:
       DEBUG: "False"
       SECRET_KEY: "v^55^y*nk%38!w^rzychc5mbqaw(rvadv@ic\$xz36101am_et!"
@@ -16,6 +17,7 @@ services:
       - "8001:8001"
     depends_on:
       - api
+    restart: always
     environment:
       API_HOST: api
       API_PORT: 8000
@@ -30,6 +32,7 @@ services:
       CODE_PORT: 8001
     depends_on:
       - code
+    restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
 volumes:
